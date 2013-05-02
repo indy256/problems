@@ -1,0 +1,72 @@
+Parachute rings
+
+A suboptimal solution covering all but the last subtask considers the following conditions:
+if there is a vertex V of degree >= 4, no other vertex can be critical (because removing V still leaves one or more vertices of degree >= 3); so if there is more than one vertex of degree >= 4, there are no critical vertices;
+if there is a vertex V of degree 3, each critical vertex is either V or one of its neighbors;
+if there is a cycle, all critical vertices lie on the cycle;
+if the graph is linear (a set of disjoint paths), all of its vertices are critical.
+
+These checks can be easily extended to the dynamic case of the last subtask: the only nontrivial check is keeping track of cycle formation, which can be dealt with using suitable data structures (union-find d.s., etc.).
+Crayfish scrivener
+
+A clever way to get an efficient solution consists in representing the evolution of the system through a trie, containing all the contents of the text so far; a point in time is represented by a single pointer to a node in the trie.
+
+Command processing requires O(1) time:
+typing a letter just requires moving down in the trie (creating a new node if necessary)
+undoing K commands requires moving K states back.
+
+For all the subtasks except the final one, after processing all the commands, the final contents can be extracted from the trie into an array and used to answer queries in O(1) time, giving O(N) time and space overall.
+
+Subtask 5 requires a definitely more sophisticated approach to find a point in the text. For this it is sufficient to be able to determine the k-ancestor of the current node: There are a number of standard data structures for this problem that give O(N log N) time overall. For example, every node at depth D can contain a pointer to its 2^k-th ancestor, where k is the position of the rightmost 1 in the binary expansion of D.
+Odometer
+
+As an illustrative example, we give directly the solution of Subtask 5, where code sharing is employed. Note that finding the minimum is not complicated, removing one pebble per cell. However, all the removed pebbles should be put back to their cells, and this complicates the solution.
+Subtask 5: solution generator in Python
+# For each possible minimum value (except 15), 
+# look for a cell that holds that many pebbles.
+# Various optimizations reduce the number of instructions.
+
+# The first step is looking for zeroes.
+print "jump 0_scan_all"
+
+for i in xrange(0,15):
+
+  # This section tries to move on the next row after a single scan. If it hits
+  # the border, we're ready to search for the next candidate minimum.
+  print "%d_test_next_row:" % i
+  print "right"
+  print "border %d_scan_all" % (i+1)
+  print "move"
+  print "right"
+  print "%d_test_next_row_l1:" % i
+  print "border %d_test_next_row_l1end" % i
+  print "move"
+  print "jump %d_test_next_row_l1" % i
+  print "%d_test_next_row_l1end:" % i
+  print "right"
+
+  # Start the evaluation of the next row of the grid.
+  print "%d_scan_all:" % i
+  print "right"
+  print "%d_test_scan_row:" % i
+  for j in xrange(i):
+    print "get"
+  print "pebble %d_test_scan_row_continue" % i
+  print "jump end_%d" % i
+  print "%d_test_scan_row_continue:" % i
+  for j in xrange(i):
+    print "put"
+  # When it hits the border, try to go to the next row and go back to the
+  # first column.
+  print "border %d_test_next_row" % i
+  print "move"
+  print "jump %d_test_scan_row" %i
+
+# When you find the minimum, you can share the code that puts back the pebbles
+# in the cell.
+for i in xrange(14,0,-1):
+    print "end_%d:" % i
+    print "put"
+print "end_0:"
+# If all the cells have 15 pebbles, any position is ok.
+print "15_scan_all:"

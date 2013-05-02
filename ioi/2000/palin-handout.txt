@@ -1,0 +1,37 @@
+Some information about task PALIN
+
+A good method to solve this problem is to determine the length L
+of a longest common subsequence (maximal matching) for the input and
+its reverse.  The answer then is N - L.  An alternative approach is
+to match a prefix of the string with the reverse of a postfix.
+
+The length of a longest common subsequence can be determined
+by dynamic programming.  A triangular table can be constructed,
+of which only two rows need to be stored.  The complexity
+is then O(N) space and O(N^2) time.
+
+Note that constructing a witness (indicating where which characters
+have to be inserted to make a palindrome) is computationally more
+involved and is not asked.
+
+For special inputs, other simpler methods may apply.
+
+The 10 test cases have the following characteristics:
+
+Case #     N   D     A  Kind of data
+------  ----  --  ----  ------------
+   1      62  62    61  Each allowed character exactly once
+   2    4960  62  4801  80 repetitions of case #1
+   3    5000   1     0  '9'^5000
+   4    5000   2  2500  'A'^2500 ++ 'z'^2500
+   5    5000   2     1  'PC'^2500
+   6     100  48    79  Random 
+   7       3   2     1  'FFT'
+   8    5000   2   919  Random with only characters 'O' and 'K'
+   9    4999  10  2628  Random with only digits
+  10    4999  20    88  'W'^4999 randomly perturbed in few places
+
+where
+  N = length of the string (input)
+  D = number of distinct characters in input string
+  A = correct answer

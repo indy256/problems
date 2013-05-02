@@ -1,0 +1,37 @@
+Some information about task POST
+
+The exact solution can be obtained by dynamic programming
+based on a 2-dimensional table.  The entire table must be
+stored (O(P*V) space), and each entry can be computed in
+O(V) time worst case.  This yields an algorithm of O(P*V^2)
+time complexity.
+
+Many approximate solutions based on various heuristics exist
+(spread post offices evenly or based on gap size between villages,
+local search, simulated annealing, genetic programming, ...).
+Because of the rules for partial credit these programs can
+also score some points in some cases.
+
+The 10 test cases POST#.IN have the following characteristics:
+
+ #    V   P  X1    XV  Gn    Gx   Answer  Kind of data
+--  ---  --  --  ----  --  ----  -------  ------------
+ 1    5   1   1     5   1     1        6  Manual, one post office
+ 2   10   2   1    10   1     1       12  Manual, small
+ 3   10   5   1    50   1    22        9  The example
+ 4  284  30  56  9985   1   209    18394  Random, large
+ 5  290  55   7  9897   1   162    24780  Random, large
+ 6  300  30  44  9249   1   202    18153  Random, largest
+ 7  300   1   1  9996   1  3700  1428420  Random, longint answer
+ 8  100   9  92   996   1    37     2134  Random, medium size
+ 9  259  15   2  9899   1  1701     3595  Random, villages in 10 clusters
+10   19   3   1  6765   1  2584     5026  Villages at Fibonacci coordinates
+
+where
+  V  = number of villages (input)
+  P  = number of post offices (input)
+  X1 = smallest village X coordinate
+  XV = greatest village X coordinate 
+  Gn = minimum gap between neighboring villages
+  Gx = maximum gap between neighboring villages
+  Answer = sum of distances for optimal post office locations

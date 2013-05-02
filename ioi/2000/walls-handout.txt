@@ -1,0 +1,47 @@
+Some information about task WALLS
+
+A straightforward solution can be based on the dual graph
+of the planar graph representing the map of towns and
+connecting walls.  The dual graph is obtained by viewing
+the areas as nodes that are connected when they share a wall
+(this can be a multigraph).
+
+Traversing an edge in the dual graph corresponds to crossing
+a wall, hence minimizing wall crossings corresponds to
+selecting shortest paths in the dual graph.
+
+A brute force approach tries each area (factor M) as a meeting
+area and determines the best routes for each member (factor L)
+by trying each starting area (factor <=N).  Applying
+Warshall's all-pairs shortest path algorithm on the dual graph,
+provides all the information needed.  This yields an
+O(N^3+M*L*N) algorithm to solve the problem.  The time limit is
+chosen such that this solution is acceptable, even though the
+complexity can be reduced by selecting a different algorithm
+for determining all relevant distances.
+
+The 10 test cases WALLS#.IN have the following characteristics:
+
+ #    M   N  L   W WAn WAx ATn ATx   Answer  Kind of data
+--  --- --- -- --- --- --- --- ---  -------  ------------
+ 1    6  10  1  14   3   9   2   5    0   1* Manual, one member
+ 2    5   5  5   8   3   4   2   4    1   4  Manual, member in every town
+ 3   10  10  3  18   3   7   2   6    2   3  The example
+ 4   50  98 20 146   3  10   2   8   35  34  Random, medium size
+ 5  100 218  2 316   3  14   2   9    2  20* Random, many areas, few members
+ 6  200 231 30 429   3   7   2  14   94  67  Random, large size
+ 7  180 208 20 386   3  32   2  17  110  84  Random, large size
+ 8  100 225 10 323   3  10   2   7   33  23  Random, medium size
+ 9  200 247 30 445   3  14   2  16   51  99* Random, members close together
+10  157 182 30 337   4  50   2   4   39 156  12x13 grid
+
+where
+  M   = number of areas (input)
+  N   = number of towns (input)
+  L   = number of members (input)
+  W   = number of walls
+  WAn = minimum number of walls around an area
+  WAx = maximum number of walls around an area
+  ATn = minimum number of areas (walls) touching a town
+  ATx = maximum number of areas (walls) touching a town
+  Answer = minimum crossing-sum, optimal meeting area (* if not unique)

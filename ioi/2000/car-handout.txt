@@ -1,0 +1,44 @@
+Some information about task CAR
+
+The final state of the parking center can easily be determined by sorting the input list of car types.  This can be done in linear time (O(M+N)).  O(N^2) and N*log N methods may be too slow for larger N.
+
+A greedy approach to construct successive rounds will work,
+since in each round it can be guaranteed that at least W-1
+cars are put into their final position.  Hence, the number
+of rounds needed by this greedy algorithm is D/(W-1) rounded up,
+where D is the number of displaced cars in the initial state
+for the input.  In general, finding the minimum number of
+rounds is NP-complete.  Even reducing the number of rounds
+for the greedy algorithm by just one round is, in general,
+as hard as finding the minimum (compare to bin packing:
+you need to find cycles that add up in length to W, for
+otherwise one worker is not doing useful work).
+
+The greedy algorithm can be implemented in O(N+M) space and
+O(N) time.  However, a more naive implementation may use O(N) space
+and O(N^2) time.  The test data has been designed to distinghuish
+linear solutions from less efficient ones.
+
+The 10 test cases have the following characteristics:
+
+ #     N   M   W      Q      D  Min  Max  Kind of data
+--  -----  --  --  -----  -----  ---  ---  ------------
+ 1      5   5   2      5      0    1    1  Sorted
+ 2     12  10   5      3     10    1    2  Manually designed
+ 3     30  30   6      6     30    1    1  Manually designed
+ 4    300  50  12     28    293    1   14  Random
+ 5    500  50  27     20    485    3   16  Random
+ 6  20000  50   5   5000  20000  400  400  4000 2-cycles, 4000 3-cycles 
+ 7  20000  50  49    417  20000  400  400  400 50-cycles
+ 8  20000  50   2  20000  19595  368  439  Random
+ 9  20000  50  10   2223    443  393  406  Sorted, randomly perturbed
+10  20000  50  50    409  19087  345  449  Random
+
+where
+  N   = number of cars (input)
+  M   = number of car types (input)
+  W   = number of workers (input)
+  Q   = N / (W-1) rounded up
+  D   = number of displaced cars
+  Min = minimum number of cars in a type, over all types
+  Max = maximum number of cars in a type, over all types
